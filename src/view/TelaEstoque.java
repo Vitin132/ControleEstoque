@@ -1,13 +1,21 @@
 package view;
 
 import DAO.ProdutoDAO;
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Point;
 
 import model.Produto;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TelaEstoque extends JFrame {
 
@@ -17,12 +25,14 @@ public class TelaEstoque extends JFrame {
 
     public TelaEstoque() {
         setTitle("Controle de Estoque");
+        setResizable(false);
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
 
         // Campos
-        JLabel lblId = new JLabel("ID:");
+        JLabel lblPreencher = new JLabel("Preencha as informações do produto.");
+        lblPreencher.setFont(new Font("Arial", Font.BOLD, 16));
         JLabel lblNome = new JLabel("Nome:");
         JLabel lblDescricao = new JLabel("Descrição:");
         JLabel lblPreco = new JLabel("Preço:");
@@ -34,7 +44,7 @@ public class TelaEstoque extends JFrame {
         txtPreco = new JTextField();
         txtQuantidade = new JTextField();
 
-        lblId.setBounds(20, 20, 100, 25);
+        lblPreencher.setBounds(80, 20, 300, 25);
         txtId.setBounds(100, 20, 50, 25);
         lblNome.setBounds(20, 60, 100, 25);
         txtNome.setBounds(100, 60, 200, 25);
@@ -45,26 +55,38 @@ public class TelaEstoque extends JFrame {
         lblQuantidade.setBounds(20, 180, 100, 25);
         txtQuantidade.setBounds(100, 180, 100, 25);
 
-        add(lblId); add(txtId);
-        add(lblNome); add(txtNome);
-        add(lblDescricao); add(txtDescricao);
-        add(lblPreco); add(txtPreco);
-        add(lblQuantidade); add(txtQuantidade);
+        add(lblPreencher);
+        add(lblNome);
+        add(txtNome);
+        add(lblDescricao);
+        add(txtDescricao);
+        add(lblPreco);
+        add(txtPreco);
+        add(lblQuantidade);
+        add(txtQuantidade);
 
         // Botões
-        JButton btnCadastrar = new JButton("Cadastrar");
+        JButton btnCadastrar = new JButton("Inserir");
         JButton btnListar = new JButton("Listar");
         JButton btnAtualizar = new JButton("Atualizar");
-        JButton btnDeletar = new JButton("Deletar");
+        JButton btnLimpar = new JButton("Limpar");
+        JButton btnDeletar = new JButton("Remover");
 
         btnCadastrar.setBounds(320, 60, 120, 25);
-        btnListar.setBounds(320, 100, 120, 25);
-        btnAtualizar.setBounds(320, 140, 120, 25);
+        btnCadastrar.setBackground(Color.BLUE);
+        btnListar.setBounds(320, 90, 120, 25);
+        btnListar.setBackground(Color.BLUE);
+        btnAtualizar.setBounds(320, 120, 120, 25);
+        btnAtualizar.setBackground(Color.BLUE);
+        btnLimpar.setBounds(320, 150, 120, 25);
+        btnLimpar.setBackground(Color.BLUE);
         btnDeletar.setBounds(320, 180, 120, 25);
+        btnDeletar.setBackground(Color.RED);
 
         add(btnCadastrar);
         add(btnListar);
         add(btnAtualizar);
+        add(btnLimpar);
         add(btnDeletar);
 
         // Tabela
@@ -79,11 +101,25 @@ public class TelaEstoque extends JFrame {
             Produto p = new Produto();
             p.setNome(txtNome.getText());
             p.setDescricao(txtDescricao.getText());
-            p.setPreco(Double.parseDouble(txtPreco.getText()));
-            p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-            new ProdutoDAO().inserir(p);
+            //p.setPreco(Double.parseDouble(txtPreco.getText()));
+            p.setPreco(txtPreco.getText());
+            //p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+            p.setQuantidade(txtQuantidade.getText());
+            try {
+                new ProdutoDAO().inserir(p);
+            } catch (SQLException ex) {
+               Logger.getLogger(TelaEstoque.class.getName()).log(Level.SEVERE, null, ex);
+            }
             limparCampos();
             listarProdutos();
+        });
+
+        btnLimpar.addActionListener(e -> {
+            txtId.setText("");
+            txtNome.setText("");
+            txtDescricao.setText("");
+            txtQuantidade.setText("");
+            txtPreco.setText("");
         });
 
         // Botão: Listar
@@ -92,11 +128,12 @@ public class TelaEstoque extends JFrame {
         // Botão: Atualizar
         btnAtualizar.addActionListener(e -> {
             Produto p = new Produto();
-            p.setId(Integer.parseInt(txtId.getText()));
+            p.setId(txtId.getText());
+            //p.setId(txtId.getText());
             p.setNome(txtNome.getText());
             p.setDescricao(txtDescricao.getText());
-            p.setPreco(Double.parseDouble(txtPreco.getText()));
-            p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+            p.setPreco(txtPreco.getText());
+            p.setQuantidade(txtQuantidade.getText());
             new ProdutoDAO().atualizar(p);
             limparCampos();
             listarProdutos();
@@ -104,11 +141,13 @@ public class TelaEstoque extends JFrame {
 
         // Botão: Deletar
         btnDeletar.addActionListener(e -> {
-            int id = Integer.parseInt(txtId.getText());
+            //int id = Integer.parseInt(txtId.getText());
+            String id = txtId.getText();
             new ProdutoDAO().deletar(id);
             limparCampos();
             listarProdutos();
         });
+        
 
         // Evento de clique na tabela: preencher campos
         tabela.addMouseListener(new MouseAdapter() {
@@ -119,6 +158,33 @@ public class TelaEstoque extends JFrame {
                 txtDescricao.setText(tabela.getValueAt(linha, 2).toString());
                 txtPreco.setText(tabela.getValueAt(linha, 3).toString());
                 txtQuantidade.setText(tabela.getValueAt(linha, 4).toString());
+            }
+        });
+        scroll.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                tabela.clearSelection();
+            }
+        });
+
+        tabela.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Point point = e.getPoint();
+                int row = tabela.rowAtPoint(point);
+                if (row == -1) {
+                    tabela.clearSelection();
+                }
+            }
+        });
+        tabela.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Point point = e.getPoint();
+                int row = tabela.rowAtPoint(point);
+                if (row == -1) {
+                    tabela.clearSelection();
+                }
             }
         });
 
@@ -147,7 +213,15 @@ public class TelaEstoque extends JFrame {
         txtQuantidade.setText("");
     }
 
-    public static void main(String[] args) {
-        new TelaEstoque();
+    public static void main(String[] args) throws UnsupportedLookAndFeelException {
+//        new TelaEstoque();
+
+        UIManager.setLookAndFeel(new FlatDarculaLaf());
+
+        
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            new TelaEstoque().setVisible(true);
+        });
     }
+
 }

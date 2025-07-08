@@ -28,7 +28,7 @@ import java.sql.SQLException;
  */
 public class Conexao {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/bdclientes";
+    private static final String URL = "jdbc:mysql://localhost:3306/estoque_db";
 
     private static final String USUARIO = "root";
 

@@ -2,18 +2,37 @@ package model;
 
 public class Produto {
 
-    private int id;
+    private String id;
     private String nome;
     private String descricao;
-    private double preco;
-    private int quantidade;
+    private String preco;
+    private String quantidade;
+
+//    public Produto(String id, String nome, String descricao, String preco, String quantidade) {
+//        this.id = id;
+//        this.nome = nome;
+//        this.descricao = descricao;
+//        this.preco = preco;
+//        this.quantidade = quantidade;
+//    }
+
+    
+    
+    
+
+   
+    
+    
+    
+    
+    
 
     // Getters e setters
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -33,19 +52,19 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public double getPreco() {
+    public String getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(String preco) {
         this.preco = preco;
     }
 
-    public int getQuantidade() {
+    public String getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(String quantidade) {
         this.quantidade = quantidade;
     }
 }
