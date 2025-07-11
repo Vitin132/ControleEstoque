@@ -15,16 +15,6 @@ public class Produto {
 //        this.preco = preco;
 //        this.quantidade = quantidade;
 //    }
-
-    
-    
-    
-
-   
-    
-    
-    
-    
     
 
     // Getters e setters

@@ -2,9 +2,8 @@ package DAO;
 
 //import Conexao.Conexao;
 import Conexao.Conexao;
+import java.math.BigDecimal;
 import java.sql.Connection;
-import model.Produto;
-
 import java.sql.*;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -15,19 +14,34 @@ public class ProdutoDAO {
     // INSERIR produto
     public void inserir(Produto p) throws SQLException {
         String sql = "INSERT INTO produtos (nome, descricao, preco, quantidade) VALUES (?, ?, ?, ?)";
+
+        BigDecimal preco;
+        try {
+            preco = new BigDecimal(p.getPreco());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Informações inválidas! Digite um número válido.");
+            return;
+        }
+
         try (Connection connection = (Connection) Conexao.getConn().abrirConexao(); PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, p.getNome());
             stmt.setString(2, p.getDescricao());
             stmt.setString(3, p.getPreco());
             stmt.setString(4, p.getQuantidade());
+
+            if (p.getPreco().isEmpty()) {
+                stmt.setNull(3, java.sql.Types.DECIMAL);
+            } else {
+                stmt.setBigDecimal(3, new BigDecimal(p.getPreco()));
+            }
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (p.getNome().isEmpty() || p.getDescricao().isEmpty() || p.getDescricao().isEmpty() && p.getPreco().isEmpty() && p.getQuantidade().isEmpty()) {
+        if (p.getNome().isEmpty() || p.getDescricao().isEmpty() || p.getDescricao().isEmpty() || p.getPreco().isEmpty() || p.getQuantidade().isEmpty()) {
             JOptionPane.showMessageDialog(
                     null,
-                    "Insira as informações do produto.",
+                    "Insira todas as informações do produto.",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE
             );
@@ -84,24 +98,23 @@ public class ProdutoDAO {
     // DELETAR produto por ID
     public void deletar(String id) {
         String sql = "DELETE FROM produtos WHERE id=?";
-        
-       
+
         try (Connection con = (Connection) Conexao.getConn().abrirConexao(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            
+
         }
-        if(id.isEmpty())
-        JOptionPane.showMessageDialog(
+        if(id.isEmpty()) {
+            JOptionPane.showMessageDialog(
                     null,
-                    "Selecione o produtos a ser removido.",
+                    "Selecione o produto a ser removido.",
                     "Erro",
                     JOptionPane.ERROR_MESSAGE
             );
             return;
-        
+        }
 
     }
 }

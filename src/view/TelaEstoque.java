@@ -2,7 +2,6 @@ package view;
 
 import DAO.ProdutoDAO;
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
@@ -129,7 +128,6 @@ public class TelaEstoque extends JFrame {
         btnAtualizar.addActionListener(e -> {
             Produto p = new Produto();
             p.setId(txtId.getText());
-            //p.setId(txtId.getText());
             p.setNome(txtNome.getText());
             p.setDescricao(txtDescricao.getText());
             p.setPreco(txtPreco.getText());
