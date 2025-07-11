@@ -12,16 +12,13 @@ As tecnologias utilizadas foram as seguintes:
 
 
 O projeto contém a seguinte estrutura:
+        
+src/
+  
+ └Conexao/Conexao.java
+ 
+ └DAO/ProdutoDAO.java
 
-ControleEstoque/
+ └model/Produto.java
 
-ControleEstoque/
-
-│
-├── src/
-│   ├── Conexao/──Conexao.java               
-│   ├── DAO/──ProdutoDAO.java             
-│   ├── model/──Produto.java              
-│   └── view/──TelaEstoque.java        
-
-            
+ └view/TelaEstoque.java
