@@ -1,3 +1,5 @@
+## Controle de Estoque
+
 Esse Controle de Estoque usa Java Swing e o banco de dados MySQL com o objetivo de gerenciar um estoque de uma empresa. O sistema permite o cadastro, a edição, a remoção e uma consulta dos produtos.
 As tecnologias utilizadas foram as seguintes:
 
@@ -11,20 +13,17 @@ As tecnologias utilizadas foram as seguintes:
   | NetBeans   | Ambiente de desenvolvimento integrado (IDE)     |
 
 
-O projeto contém a seguinte estrutura:
+## O projeto contém a seguinte estrutura:
 ```sh     
 src/
   
  └Conexao/Conexao.java
- 
  └DAO/ProdutoDAO.java
-
  └model/Produto.java
-
  └view/TelaEstoque.java
 ```
 
- O sistema possui a seguinte interface:
+ ## O sistema possui a seguinte interface:
 
  
 <img width="786" height="493" alt="Captura de tela 2025-07-11 195637" src="https://github.com/user-attachments/assets/9ddd41c0-1828-494c-a1f5-0c515bcc4f4d" />
