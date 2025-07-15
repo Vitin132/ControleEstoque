@@ -19,7 +19,7 @@ public class ProdutoDAO {
         try {
             preco = new BigDecimal(p.getPreco());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Informações inválidas! Digite um número válido.");
+            JOptionPane.showMessageDialog(null, "Informações inválidas! Digite informações válidas.");
             return;
         }
 
