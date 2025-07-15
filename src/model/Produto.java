@@ -8,13 +8,6 @@ public class Produto {
     private String preco;
     private String quantidade;
 
-//    public Produto(String id, String nome, String descricao, String preco, String quantidade) {
-//        this.id = id;
-//        this.nome = nome;
-//        this.descricao = descricao;
-//        this.preco = preco;
-//        this.quantidade = quantidade;
-//    }
     
 
     // Getters e setters

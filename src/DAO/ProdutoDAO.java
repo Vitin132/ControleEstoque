@@ -1,7 +1,7 @@
 package DAO;
 
 //import Conexao.Conexao;
-import Conexao.Conexao;
+import Controller.Conexao;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.*;

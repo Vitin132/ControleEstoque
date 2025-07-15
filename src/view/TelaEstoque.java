@@ -2,6 +2,7 @@ package view;
 
 import DAO.ProdutoDAO;
 import com.formdev.flatlaf.FlatDarculaLaf;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Point;
@@ -28,6 +29,7 @@ public class TelaEstoque extends JFrame {
         setSize(800, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
+        
 
         // Campos
         JLabel lblPreencher = new JLabel("Preencha as informações do produto.");
@@ -100,9 +102,7 @@ public class TelaEstoque extends JFrame {
             Produto p = new Produto();
             p.setNome(txtNome.getText());
             p.setDescricao(txtDescricao.getText());
-            //p.setPreco(Double.parseDouble(txtPreco.getText()));
             p.setPreco(txtPreco.getText());
-            //p.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
             p.setQuantidade(txtQuantidade.getText());
             try {
                 new ProdutoDAO().inserir(p);
@@ -158,33 +158,10 @@ public class TelaEstoque extends JFrame {
                 txtQuantidade.setText(tabela.getValueAt(linha, 4).toString());
             }
         });
-        scroll.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                tabela.clearSelection();
-            }
-        });
 
-        tabela.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Point point = e.getPoint();
-                int row = tabela.rowAtPoint(point);
-                if (row == -1) {
-                    tabela.clearSelection();
-                }
-            }
-        });
-        tabela.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Point point = e.getPoint();
-                int row = tabela.rowAtPoint(point);
-                if (row == -1) {
-                    tabela.clearSelection();
-                }
-            }
-        });
+
+
+
 
         setVisible(true);
     }
